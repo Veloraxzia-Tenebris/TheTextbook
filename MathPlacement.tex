@@ -1,0 +1,648 @@
+\documentclass[12pt]{article}
+\usepackage[style=ieee]{biblatex}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage[x11names]{xcolor}
+\usepackage{geometry}
+\usepackage{babel}
+\usepackage{slantsc}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{wasysym}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{bm}
+\usepackage{xfrac}
+\usepackage{siunitx}
+\usepackage{pgfplots}
+\usepackage{tikz, tikz-3dplot}
+\usetikzlibrary{calc}
+\usetikzlibrary{math}
+\usetikzlibrary{arrows.meta}
+\usepackage{minted}
+\usepackage{scalerel}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{xfp}
+\usepackage[center, explicit]{titlesec}
+\usepackage{dutchcal}
+\usepackage{calligra}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{lastpage}
+\usepackage{mathdots}
+\usepackage{lmodern}
+\usepackage{etoolbox}
+\usepackage{ted}
+\usepackage[extractpreamble = ""]{svg-extract}
+\pdfsuppresswarningpagegroup = 1
+\usemintedstyle{xcode}
+\setminted{frame = lines, linenos = true, numbersep = 12pt, xleftmargin = 24pt, bgcolor = lightpurple, fontsize = \footnotesize, breaklines = true, tabsize = 5, gobble = 5}
+\input Typocaps.fd
+\newcommand*\fancyblock{\usefont{U}{Typocaps}{xl}{n}}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+	T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\graphicspath{ {./} }
+\geometry{a4paper, portrait, hmargin = 1cm, tmargin = 1cm + 4em, bmargin = 1cm + 1em, footskip = 2em, headsep = 4em}
+\makeatletter
+%\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+
+% Purple:	H = 269
+% Pink:	H = 316
+% Red:	H = 345
+% Light:	S = 010, V = 100
+% Dark:	S = 100, V = 040
+% Black:	S = 100, V = 020
+\definecolor{lightpink}{HTML}{FFE5F8}
+\definecolor{lightpurple}{HTML}{F2E5FF}
+\definecolor{lightred}{HTML}{FFE5EB}
+\definecolor{velpink}{HTML}{FF00BB}
+\definecolor{velpurple}{HTML}{7B00FF}
+\definecolor{velred}{HTML}{FF003E}
+\definecolor{darkpink}{HTML}{66004B}
+\definecolor{darkpurple}{HTML}{3E0080}
+\definecolor{darkred}{HTML}{66001A}
+\definecolor{blackpink}{HTML}{330025}
+\definecolor{blackpurple}{HTML}{190033}
+\definecolor{blackred}{HTML}{33000D}
+
+\hypersetup{
+	colorlinks = true,
+	linkcolor = velpurple,
+	filecolor = velred,
+	urlcolor = velpink,
+}
+
+\sisetup{
+	parse-numbers = false,
+	per-mode = fraction,
+	fraction-function = \sfrac,
+	exponent-product = \ensuremath{{}\cdot{}},
+	inter-unit-product = \ensuremath{{}\cdot{}}
+}
+
+\titleformat{\section}[block]{\newpage\normalfont\Large\filcenter\nostruts}{\titleline[c]{\textbf{\dotfill}}\vspace{1ex}\titleline[c]{\textbf{(\thesection)}}}{0em}{\vspace{1ex}\titleline[c]{\textbf{#1}}\vspace{1ex}\titleline[c]{\textbf{\dotfill}}}
+\titlespacing{\section}{0em}{2ex}{4ex}
+
+\titleformat{\subsection}[block]{\normalfont\filcenter\nostruts}{\titleline[c]{\hspace{2em}\dotfill\hspace{2em}}\titleline[c]{\(\iddots\)\hfill\textbf{(\thesubsection)}\hfill\(\ddots\)}}{0em}{\vspace{-0.5ex}\titleline[c]{\(\ddots\)\hfill\textbf{#1}\hfill\(\iddots\)}\vspace{1ex}\titleline[c]{\hspace{2em}\dotfill\hspace{2em}}}
+\titlespacing{\subsection}{0em}{8ex}{2ex}
+
+\titleformat{\subsubsection}[block]{\normalfont\filcenter\nostruts}{\titleline[c]{\hspace{4em}\dotfill(\thesubsubsection)\dotfill\hspace{4em}}}{0pt}{\vspace{1ex}\titleline[c]{\hspace{6em}\dotfill\hspace{1em}\underline{#1}\hspace{1em}\dotfill\hspace{6em}}}
+\titlespacing{\subsubsection}{0em}{4ex}{2ex}
+
+\fancypagestyle{velfancy}[fancydefault]{
+	\fancyhead[L]{\fancyblock{\uppercase{Tenebris}}\\\fancyblock{\uppercase{Systems}}\\\url{https://www.tenebris.systems/}}
+	\fancyhead[R]{\textsc{The Textbook}\\\leftmark\\\rightmark}
+	\fancyfoot[C]{\thepage\ of \pageref{LastPage}}
+	\fancyfoot[L]{01.01.01.01.01}
+}
+
+\fancypagestyle{tocfancy}[velfancy]{
+	\fancyhead[R]{\textsc{The Textbook}\\\leftmark\\}
+	\fancyfoot[C]{\thepage\ }
+}
+
+\newcommand{\coll}{0.45}
+\newcommand{\colll}{0.3}
+
+\newcommand*{\overrightharpoonup}{\mathpalette{\overarrow@\rightharpoonupfill@}}
+\newcommand*{\rightharpoonupfill@}{\arrowfill@\relbar\relbar\rightharpoonup}
+\makeatother
+\renewcommand{\vec}[1]{\overrightharpoonup{\bm{\mathrm{#1}}}}
+\newcommand{\vhat}[1]{\hat{\bm{\mathrm{#1}}}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\newcommand{\mat}[1]{\bm{\left[\mathrm{#1}\right]}}
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+\binoppenalty = 99999
+\relpenalty = 99999
+
+\newcommand{\qed}{\ensuremath{\;\;\;\blacksquare\;\;\;}}
+\newcommand{\dd}{\text{d}}
+\newcommand{\na}{\begin{center}\texttt{N/A}\end{center}}
+\DeclareMathOperator\cis{cis}
+
+\let\DeclareUSUnit\DeclareSIUnit
+\let\US\SI
+\DeclareUSUnit\inch{in}
+\DeclareUSUnit\foot{ft}
+\DeclareUSUnit\kip{kip}
+\DeclareUSUnit\psi{psi}
+\DeclareUSUnit\horsepower{hp}
+\DeclareUSUnit\dollar{\mathdollar}
+
+\begin{document}
+	\begin{titlepage}
+		\tikzmath{	\fpb = 10;
+					\ffi = 12;
+					\ffo = 8;
+					\fsi = 8;
+					\fso = 6;
+				}
+		\begin{tikzpicture}[remember picture, overlay, inner sep = 0, outer sep = 0]
+			\draw[velpink, double distance = 2mm, rounded corners = 1em, line width = 2mm]
+				([xshift = -\fpb mm, 	yshift = -\fpb mm]	current page.north east) coordinate (A) --
+				([xshift = \fpb mm, 	yshift = -\fpb mm]	current page.north west) coordinate (B) --
+				([xshift = \fpb mm, 	yshift = \fpb mm] 	current page.south west) coordinate (C) --
+				([xshift = -\fpb mm, 	yshift = \fpb mm] 	current page.south east) coordinate (D) --
+				cycle;
+			\draw[velpurple, line join = bevel, line width = 1mm]
+				([yshift = -\ffi mm,	xshift = \ffo mm]	A) --
+				([yshift = -\ffi mm,	xshift = -\ffi mm]	A) --
+				([yshift = \ffo mm, 	xshift = -\ffi mm]	A) --
+				([yshift = \ffo mm, 	xshift = \ffi mm] 	B) --
+				([yshift = -\ffi mm,	xshift = \ffi mm]	B) --
+				([yshift = -\ffi mm,	xshift = -\ffo mm]	B) --
+				([yshift = \ffi mm,		xshift = -\ffo mm]	C) --
+				([yshift = \ffi mm,		xshift = \ffi mm]	C) --
+				([yshift = -\ffo mm,	xshift = \ffi mm]	C) --
+				([yshift = -\ffo mm,	xshift = -\ffi mm]	D) --
+				([yshift = \ffi mm,		xshift = -\ffi mm]	D) --
+				([yshift = \ffi mm,		xshift = \ffo mm]	D) --
+				cycle;
+			\draw[velpurple, line join = bevel, line width = 1mm]
+				([yshift = \fso mm,		xshift = -\fsi mm]	A) --
+				([yshift = \fso mm,		xshift = \fso mm]	A) --
+				([yshift = -\fsi mm,	xshift = \fso mm]	A) --
+				([yshift = -\fsi mm,	xshift = -\fso mm]	B) --
+				([yshift = \fso mm,		xshift = -\fso mm]	B) --
+				([yshift = \fso mm,		xshift = \fsi mm]	B) --
+				([yshift = -\fso mm,	xshift = \fsi mm]	C) --
+				([yshift = -\fso mm,	xshift = -\fso mm]	C) --
+				([yshift = \fsi mm,		xshift = -\fso mm]	C) --
+				([yshift = \fsi mm,		xshift = \fso mm]	D) --
+				([yshift = -\fso mm,	xshift = \fso mm]	D) --
+				([yshift = -\fso mm,	xshift = -\fsi mm]	D) --
+				cycle;
+		\end{tikzpicture}
+		\begin{center}
+			{\fancyblock{\uppercase{Tenebris}}}
+			
+			{\fancyblock{\uppercase{Systems}}}
+
+			\medskip
+
+			\begin{Large}
+				\textsc{The Textbook}
+			\end{Large}
+
+			\medskip
+			
+			\begin{small}
+				Veloraxzia Tenebris
+			\end{small}
+
+			\vspace{\fill}
+
+			\begin{Huge}
+				\textsc{\underline{Mathematics}}
+			\end{Huge}
+
+			\bigskip
+
+			\bigskip
+
+			\begin{LARGE}
+				\textsc{General Placement Exam}
+			\end{LARGE}
+
+			\bigskip
+
+			01.01.01.01.01
+
+			\bigskip
+
+			Unending; Unceasing; Eternal
+
+			\vspace{\fill}
+		\end{center}
+	\end{titlepage}
+
+	\pagenumbering{Roman}
+	\pagestyle{tocfancy}
+	\tableofcontents
+	\clearpage
+
+	\setcounter{page}{0}
+	\pagenumbering{arabic}
+	\pagestyle{velfancy}
+
+	\section{Algebra}
+		\subsection{Linear Equations and Inequalities}
+			\subsubsection{}
+				Solve for \(x\) in the following equation:
+				\[3(2x-5)-4(x+1)=7\]
+			\subsubsection{}
+				Solve the following inequality and give the solution set in interval notation for the following equation:
+				\[-2(3x-1)\le5x+9\]
+			\subsubsection{}
+				A phone plan charges a \(\$15\) monthly fee plus \(\$0.08\) per text. Write and solve an inequality for the number of texts \(t\) so the monthly cost is at most \(\$35\).
+
+		\subsection{The Coordinate Plane and Graphing}
+			\subsubsection{}
+				For the following line, find the slope and \(y\)-intercept of the line, then graph it:
+				\[2x-3y=12\]
+			\subsubsection{}
+				Determine whether the points \(( -2,5)\),\((1,-1)\), and\((4,-7)\) are collinear.
+			\subsubsection{}
+				A line passes through \((3,-2)\) and is perpendicular to the following line:
+				\[y=\tfrac{1}{3}x+4\]
+				Find its equation in slope-intercept form.
+
+		\subsection{Systems of Linear Equations and Inequalities}
+			\subsubsection{}
+				Solve the following system:
+				\[\begin{cases}2x+3y=13\\x-2y=-4\end{cases}\]
+			\subsubsection{}
+				Solve the following system:
+				\[\begin{cases}y\le3x-1\\y=5x-6\end{cases}\]
+			\subsubsection{}
+				Graph the following system of inequalities and state the feasible region:
+				\[\begin{cases}y\ge-x+1\\y<2x+4\\x\ge-1\end{cases}\].
+
+		\subsection{Exponents and Radicals}
+			\subsubsection{}
+				Simplify the following:
+				\[\frac{(x^3y^{-2})^2}{x^{-1}y^3}\]
+			\subsubsection{}
+				Simplify and rationalize the denominator of the following:
+				\[\frac{5}{\sqrt{3}-\sqrt{2}}\]
+			\subsubsection{}
+				Solve the following:
+				\[2^{x+1}=16\sqrt{2}\]
+
+		\subsection{Polynomials}
+			\subsubsection{}
+				Solve and simplify the following:
+				\[(2x-3)(x^2+4x-5)\]
+			\subsubsection{}
+				Factor the following completely:
+				\[6x^3-15x^2-24x\]
+			\subsubsection{}
+				Divide the following using synthetic division and state quotient and remainder:
+				\[(2x^3-3x^2+4x-7)\div(x-2)\]
+
+		\subsection{Quadratics}
+			\subsubsection{}
+				Solve the following by completing the square
+				\[x^2-6x+1=0\]
+			\subsubsection{}
+				Find the vertex and axis of symmetry of the following:
+				\[y=-2x^2+8x-3\]
+				State the maximum or minimum value.
+			\subsubsection{}
+				A ball is thrown upward from a height of \(\qty{5}{\meter}\) with initial velocity \(\qty{18}{\meter\per\second}\). Its height is given by the following:
+				\[h(t)=-4.9t^2+18t+5\]
+				Find when it hits the ground.
+
+		\subsection{Rational Expressions}
+			\subsubsection{}
+				Simplify the following and state the restrictions on \(x\):
+				\[\frac{x^2-9}{x^2-3x}\]
+			\subsubsection{}
+				Solve and check the following for extraneous solutions:
+				\[\frac{2}{x-1}+\frac{3}{x+1}=\frac{5}{x^2-1}\]
+			\subsubsection{}
+				Find vertical and horizontal asymptotes of the following:
+				\[f(x)=\frac{3x^2-2}{x^2-4x+4}\]
+
+		\subsection{Absolute Value Equations and Inequalities}
+			\subsubsection{}
+				Solve the following:
+				\[\abs{3x-7}=11\]
+			\subsubsection{}
+				Solve the following inequality:
+				\[\abs{2x+1}<5\]
+			\subsubsection{}
+				A temperature sensor has an error of at most \(\qty{0.3}{\degreeCelsius}\). If it reads \(\qty{22}{\degreeCelsius}\), write an inequality for the true temperature \(T\).
+
+		\subsection{Functions}
+			\subsubsection{}
+				Given the following:
+				\[f(x)=\frac{x-1}{x+2}\]
+				Find the domain and range.
+			\subsubsection{}
+				Let the following function definitions hold:
+				\[f(x)=x^2-4x+3\]
+				\[g(x)=\sqrt{x+1}\]
+				Find the shared domain and range of both functions.
+			\subsubsection{}
+				Determine whether the following equation is one-to-one:
+				\[f(x)=\abs{x}+2\]
+				Justify.
+
+	\section{Precalculus}
+		\subsection{Function Families}
+			\subsubsection{}
+				Sketch the following functions:
+				\[f(x)=2^x\]
+				\[g(x)=2^{x-3}+1\]
+				Describe transformations from \(f\) to \(g\).
+			\subsubsection{}
+				Find all intercepts and asymptotes of the following function:
+				\[f(x)=\frac{1}{x-2}+3\]
+			\subsubsection{}
+				A population doubles every 6 hours and starts at 500. Write the function for the population \(P(t)\), and find \(P(18)\).
+
+		\subsection{Function Inverses and Compositions}
+			\subsubsection{}
+				Find the inverse of the following and verify by composition:
+				\[f(x)=\frac{3x-2}{5}\]
+			\subsubsection{}
+				Given the following functions:
+				\[f(x)=\sqrt{4-x}\]
+				\[g(x)=x^2+1\]
+				Compute \(\left(g\circ f\right)\left(x\right)\) and state its domain.
+			\subsubsection{}
+				Determine whether the following is invertible on \(\mathbb{R}\):
+				\[f(x)=x^3-3x\]
+				If not, give an interval where it is.
+
+		\subsection{Complex Numbers}
+			\subsubsection{}
+				Compute and write the following in \(a+bi\) form:
+				\[(3-2i)(-1+5i)\]
+			\subsubsection{}
+				Simplify the following:
+				\[\frac{4+7i}{2- i}\]
+			\subsubsection{}
+				Solve the following:
+				\[z^2+4z+13=0\]
+				Express solutions in \(a\pm bi\).
+
+		\subsection{Zeros and Roots}
+			\subsubsection{}
+				Given the following function:
+				\[p(x)=x^3-6x^2+11x-6\]
+				Find all real zeros and factor completely.
+			\subsubsection{}
+				Use the Rational Root Theorem to list all possible rational zeros of the following function:
+				\[p(x)=2x^3-3x^2-8x+12\]
+			\subsubsection{}
+				A polynomial has degree \(4\) with real coefficients and zeros \(2,-1+3i\). Write a possible monic polynomial.
+
+		\subsection{Logarithms}
+			\subsubsection{}
+				Solve the following:
+				\[\log_3\left(x-1\right)+\log_3\left(x+2\right)=2\]
+			\subsubsection{}
+				Rewrite the following in logarithmic form and evaluate:
+				\[5^{3/2}\]
+			\subsubsection{}
+				Solve the following for \(t\):
+				\[2e^{0.4t}=15\]
+
+		\subsection{Sequences and Series}
+			\subsubsection{}
+				Find an explicit formula for the arithmetic sequence with \(a_1=7\) and common difference \(d=-3\). Then find \(a_{20}\).
+			\subsubsection{}
+				Find the sum of the following geometric series:
+				\[\sum_{k=0}^{8}3\left(\frac{1}{2}\right)^k\]
+			\subsubsection{}
+				Determine whether the following infinite geometric series converges, and if so find its sum:
+				\[1-\tfrac{2}{3}+\tfrac{4}{9}-\cdots\]
+
+		\subsection{Combinatorics}
+			\subsubsection{}
+				How many \(5\)-character passwords can be made using A--Z and 0--9 if repetition is allowed?
+			\subsubsection{}
+				From \(10\) students, how many ways can you choose a committee of \(4\)?
+			\subsubsection{}
+				How many distinct permutations of the letters in \texttt{MISSISSIPPI} are there?
+
+		\subsection{Probability}
+			\subsubsection{}
+				A fair die is rolled twice. Find \(P(\text{sum}=7)\).
+			\subsubsection{}
+				A box has 5 red, 3 blue, and 2 green balls. Two are drawn without replacement. Find \(P(\text{both red})\)
+			\subsubsection{}
+				Let the \(X\) be defined as following distribution:
+				\[X\sim \text{Binomial}(n=12,p=0.3)\]
+				Compute \(P(X\ge4)\).
+
+	\section{Trigonometry}
+		\subsection{Radians and The Unit Circle}
+			\subsubsection{}
+				Convert \(135\degree\) to radians and locate the angle on the unit circle.
+			\subsubsection{}
+				Find the exact values of the following:
+				\[\sin\left(\frac{7\pi}{6}\right)\]
+				\[\cos\left(\frac{7\pi}{6}\right)\]
+			\subsubsection{}
+				Given a point on the unit circle with \(x=-\frac{3}{5}\) in Quadrant II, find \(y\) and \(\tan\left(\theta\right)\).
+
+		\subsection{Trigonometric Functions}
+			\subsubsection{}
+				Sketch one period of the following:
+				\[y=3\sin(2x-\pi)\]
+				State the amplitude, period, and phase shift.
+			\subsubsection{}
+				Solve for \(x\in\left[0,2\pi\right)\) in the following:
+				\[\cos\left(x\right)=\frac{\sqrt{2}}{2}\]
+			\subsubsection{}
+				Evaluate the following exactly:
+				\[\sec\left(\frac{\pi}{3}\right)+\csc\left(\frac{\pi}{6}\right)\]
+
+		\subsection{Trigonometric Identities}
+			\subsubsection{}
+				Verify the following identity where it is defined:
+				\[\frac{1-\cos 2x}{\sin 2x}=\tan\left(x\right)\]
+			\subsubsection{}
+				Simplify the following:
+				\[\sin\left(x\right)\cos\left(x\right)\left(\tan\left(x\right)+\cot\left(x\right)\right)\]
+			\subsubsection{}
+				Prove the following identity:
+				\[\sin^2\left(x\right)=\frac{1-\cos 2x}{2}\]
+
+		\subsection{Vectors}
+			\subsubsection{}
+				Given the following:
+				\[\vec{a}=\langle 2,-1,3\rangle\]
+				\[\vec{b}=\langle-4,0,5\rangle\]
+				Compute \(\vec{a}\cdot\vec{b}\) and the angle between the vectors.
+			\subsubsection{}
+				Find a unit vector in the following direction:
+				\[\vec{v}=\langle6,2\rangle\]
+			\subsubsection{}
+				Compute the projection of \(\vec{u}\) onto \(\vec{v}\):
+				\[\vec{u}=\langle1,2,2\rangle\]
+				\[\vec{v}=\langle2,0,1\rangle\]
+
+		\subsection{Polar Coordinates}
+			\subsubsection{}
+				Convert the following to Cartesian coordinates:
+				\[(r,\theta)=\left(4,\frac{5\pi}{6}\right)\]
+			\subsubsection{}
+				Convert the following to polar coordinates with \(r>0\) and \(0\le\theta<2\pi\):
+				\[(x,y)=(-3,3\sqrt{3})\]
+			\subsubsection{}
+				Sketch the polar curve for the following and identify it in Cartesian form:
+				\[r=2\cos\left(\theta\right)\]
+
+		\subsection{The Complex Plane}
+			\subsubsection{}
+				Plot the following and compute the principal values \(\abs{z}\) and \(\angle(z)\):
+				\[z=-2+3i\]
+			\subsubsection{}
+				Write the following in \(a+bi\) form:
+				\[z=4\left(\cos\left(\frac{\pi}{3}\right)+i\sin\left(\frac{\pi}{3}\right)\right)\]
+			\subsubsection{}
+				Compute using polar form:
+				\[\left(2\cis\left(\frac{\pi}{6}\right)\right)^3\]
+				Where:
+				\[\cis\theta=\cos\left(\theta\right)+i\sin\left(\theta\right)\]
+
+	\section{Calculus}
+		\subsection{Limits and Continuity}
+			\subsubsection{}
+				Compute the following:
+				\[\lim_{x\to2}\left(\frac{x^2-4}{x-2}\right)\]
+			\subsubsection{}
+				Determine whether the following is continuous at \(x=1\):
+				\[f(x)=\begin{cases}x^2,&x\le 1\\2x-1,&x>1\end{cases}\]
+			\subsubsection{}
+				Compute the following:
+				\[\lim_{x\to0}\left(\frac{\sin(5x)}{x}\right)\]
+
+		\subsection{Derivatives}
+			\subsubsection{}
+				Differentiate the following:
+				\[f(x)=x^3\ln\left(x\right)\]
+			\subsubsection{}
+				Find \(f^\prime(x)\) for the following:
+				\[f(x)=\frac{2x-1}{x^2+4}\]
+			\subsubsection{}
+				Find the derivative of the following:
+				\[y=e^{2x}\sin x\]
+
+		\subsection{Implicit Differentiation}
+			\subsubsection{}
+				Given the following, find \(\frac{\dd y}{\dd x}\):
+				\[x^2+xy+y^2=7\]
+			\subsubsection{}
+				Find the equation of the tangent line for the following at \((1,0)\):
+				\[x^2y+\sin\left(y\right)=1\]
+			\subsubsection{}
+				Find \(\frac{\dd^2 y}{\dd x^2}\) for the following circle:
+				\[x^2+y^2=25\]
+
+		\subsection{Linear Approximations}
+			\subsubsection{}
+				Use linearization to approximate the following near\(x=8\):
+				\[\sqrt[3]{8.1}\]
+			\subsubsection{}
+				Find the linearization of the following at \(x=1\), and use it to approximate \(\ln(1.05)\):
+				\[f(x)=\ln\left(x\right)\]
+			\subsubsection{}
+				Estimate the error of the next-order term for approximating \(e^{0.02}\) using linearization at 0.
+
+		\subsection{Related Rates}
+			\subsubsection{}
+				A circle's radius increases at at the following rate:
+				\[\frac{\dd r}{\dd t}=\qty{0.4}{\meter\per\second}\]
+				Find \(\frac{\dd A}{\dd t}\) when \(r=\qty{5}{\meter}\).
+			\subsubsection{}
+				A \(\qty{10}{\meter}\) ladder slides down a wall. If the bottom moves away at \(\qty{1.2}{\meter\per\second}\), how fast is the top sliding when the bottom is \(\qty{6}{\meter}\) from the wall?
+			\subsubsection{}
+				Water is poured into a conical cup with a height of \(\qty{12}{\centi\meter}\) and a radius of \(\qty{4}{\centi\meter}\). If \(\frac{\dd V}{\dd t}=\qty{3}{\centi\meter\cubed\per\second}\), find \(\frac{\dd h}{\dd t}\) when \(h=\qty{6}{\centi\meter}\).
+
+		\subsection{Optimization}
+			\subsubsection{}
+				Find the dimensions of a rectangle with perimeter 40 that maximize area.
+			\subsubsection{}
+				Minimize the surface area of a closed cylinder with a volume of \(100\pi\).
+			\subsubsection{}
+				A company finds demand the following price per unit for \(x\) units:
+				\[p=120-2x\]
+				Find the \(x\) that maximizes revenue.
+
+		\subsection{Integrals}
+			\subsubsection{}
+				Compute the following:
+				\[\int{3x^2-4x+1\dd x}\]
+			\subsubsection{}
+				Compute the following:
+				\[\int_0^2{x^2+1\dd x}\]
+			\subsubsection{}
+				Evaluate the following and state the domain condition:
+				\[\int{\frac{1}{x}\dd x}\]
+
+		\subsection{Techniques of Integration}
+			\subsubsection{}
+				Compute the following:
+				\[\int{xe^{x}\dd x}\]
+			\subsubsection{}
+				Compute the following:
+				\[\int{\frac{1}{x^2-1}\dd x}\]
+			\subsubsection{}
+				Compute the following:
+				\[\int_0^{\pi/2}{\sin^3\left(x\right)\dd x}\]
+
+		\subsection{Parameterization}
+			\subsubsection{}
+				Given the following, find \(\frac{\dd y}{\dd x}\) in terms of \(t\):
+				\[\vec{r}\left(t\right)=\langle t^2,t^3\rangle\]
+			\subsubsection{}
+				Find the arc length of the following for \(0\le t\le\pi\):
+				\[\vec{r}(t)=\langle3\cos\left(t\right),3\sin\left(t\right)\rangle\]
+			\subsubsection{}
+				Eliminate the parameter to express the following curve as \(y\) in terms of \(x\):
+				\[x=2t-1,\>y=t^2+4\]
+
+		\subsection{Area and Average Value}
+			\subsubsection{}
+				Find the area between the following on \([0,1]\):
+				\[y=x\]
+				\[y=x^2\]
+			\subsubsection{}
+				Compute the average value of the following on \([0,3]\):
+				\[f(x)=x^2\]
+			\subsubsection{}
+				Set up the integral for the volume when the region under the following curve on \([0,4]\) is revolved about the \(x\)-axis:
+				\[y=\sqrt{x}\]
+
+		\subsection{Polar Calculus}
+			\subsubsection{}
+				Find the area enclosed by one loop of the following:
+				\[r=2\sin\left(\theta\right)\]
+			\subsubsection{}
+				Compute the slope \(\frac{\dd y}{\dd x}\) for the following polar curve at \(\theta=\frac{\pi}{4}\):
+				\[r(\theta)=1+\cos\left(\theta\right)\]
+			\subsubsection{}
+				Find the length of the following polar curve for \(0\le\theta\le2\pi\):
+				\[r=3\]
+
+		\subsection{Convergence of Sequences and Series}
+			\subsubsection{}
+				Determine whether the following sum converges:
+				\[\sum_{n=1}^\infty{\frac{1}{n^2}}\]
+			\subsubsection{}
+				Use the ratio test on the following:
+				\[\sum_{n=1}^\infty{\frac{n!}{3^n}}\]
+			\subsubsection{}
+				Find the following:
+				\[\lim_{n\to\infty}\left(\left(1+\frac{2}{n}\right)^n\right)\]
+
+		\subsection{Power Series}
+			\subsubsection{}
+				Find the radius and interval of convergence of the following:
+				\[\sum_{n=1}^\infty{\frac{(x-2)^n}{n4^n}}\]
+			\subsubsection{}
+				Find the first four nonzero terms of the Maclaurin series for the following:
+				\[\sin\left(x\right)\]
+			\subsubsection{}
+				Use a Taylor series about 0 to approximate the following with an error bound less than \(10^{-4}\):
+				\[\ln(1.2)\]
+\end{document}
