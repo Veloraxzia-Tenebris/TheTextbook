@@ -76,6 +76,8 @@ Open source general STEM textbook meant for engineers.
 ### Manufacturing Processes
 ### Design for Manufacturing and Assembly
 ### Project Management and Engineering Economics
+### Orbital Mechanics
+### Rocket Science
 
 ## Electrical Engineering
 ### Circuit Analysis
@@ -88,6 +90,7 @@ Open source general STEM textbook meant for engineers.
 ### Power Electronics
 ### RF Circuits
 ### Telecommunications
+### Satellite Engineering
 
 ## Computer Science
 ### Procedural Programming
